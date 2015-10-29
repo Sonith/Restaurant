@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+</head>
+<body>
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+<header>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Restaurant Reservation</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+
+                <form class="navbar-form navbar-right" role="form">
+
+                    <div class="form-group">
+                        <input type="text" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Sign in</button>
+                </form>
+            </div>
+            <!--/.navbar-collapse -->
+        </div>
+    </nav>
+</header>
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<section>
+
+    <div class="well container">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title text-center">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true">
+                            <strong> View Reservations</strong>
+                        </a>
+                    </h4>
+                </div>
+                <!--TODO Click on an entry to show an overlay with more details-->
+                <!-- List of reservations-->
+                <div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true">
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Confirmation #</th>
+                                <th>Customer Name</th>
+                                <th>Reservation Date</th>
+                                <th>Party Size</th>
+                                <th>Assign Table</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>$$DATE$$</td>
+                                <td>2</td>
+                                <td>
+                                    <button type="submit" class="btn large-btn btn-primary">Assign</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>$$DATE$$</td>
+                                <td>3</td>
+                                <td>
+                                    <button type="submit" class="btn large-btn btn-primary">Assign</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td>$$DATE$$</td>
+                                <td>4</td>
+                                <td>
+                                    <button type="submit" class="btn large-btn btn-primary">Assign</button>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- pagination-->
+                        <div class="col-md-4"></div>
+
+                        <nav class="col-md-4 text-center">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <h4 class="panel-title text-center">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">
+                            <strong> View Seating Area </strong> </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false">
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Table #</th>
+                                <th>Status</th>
+                                <th>Since</th>
+                                <th>Party Size</th>
+                                <th>Confirmation #</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Reserved</td>
+                                <td>$$TIME$$</td>
+                                <td>2</td>
+                                <td>
+                                    #
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Open</td>
+                                <td>$$TIME$$</td>
+                                <td>3</td>
+                                <td>
+                                    #
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Open</td>
+                                <td>$$TIME$$</td>
+                                <td>4</td>
+                                <td>
+                                    #
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title text-center">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">
+                            <strong>Profile and Settings</strong>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false">
+                    <div class="panel-body">
+
+                        <div class="panel panel-default">
+
+                            <div class="panel-heading">Profile</div>
+                            <div class="panel-body">
+                                <form role="form ">
+                                    <div class="col-md-4 ">
+                                        <div class="form-group">
+                                            <label for="restaurant-name">Restaurant Name</label>
+                                            <input type="text" required class="form-control" id="restaurant-name" placeholder="Restaurant Name">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 ">
+                                        <div class="form-group">
+                                            <label for="restaurant-contact">Contact</label>
+                                            <input type="tel" required class="form-control" id="restaurant-contact" placeholder="Contact Number">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 ">
+                                        <div class="form-group">
+                                            <label for="restaurant-email">Email</label>
+                                            <input type="email" required class="form-control" id="restaurant-email" placeholder="Restaurant Email">
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+
+                            <div class="panel-heading">Auto Assign Tables</div>
+                            <div class="panel-body">
+                                <div class="col-sm-2">
+                                    <input type="radio" name="sex" value="on" checked> True
+                                </div>
+
+                                <div class="col-sm-10"><input type="radio" name="sex" value="off"> False</div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+
+                            <div class="panel-heading">Select Timings</div>
+                            <div class="panel-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">Monday</th>
+                                        <td><input type="time" value="09:00:00"></td>
+                                        <td><input type="time" value="18:00:00"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Tuesday</th>
+                                        <td><input type="time" value="09:00:00"></td>
+                                        <td><input type="time" value="18:00:00"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Wednesday</th>
+                                        <td><input type="time" value="09:00:00"></td>
+                                        <td><input type="time" value="18:00:00"></td>
+
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                        <button class="btn btn-primary btn-lg center-block">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title text-center">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" class="collapsed" aria-expanded="false">
+                            <strong>Create Reservation</strong>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse" aria-expanded="false">
+                    <div class="panel-body">
+                        <form role="form">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="customer-name">Name</label>
+                                        <input type="text" required class="form-control" id="customer-name" placeholder="Your name goes here">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="customer-phone">Phone</label>
+                                        <input type="tel" required class="form-control" id="customer-phone" placeholder="Your Cell Number goes here">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="customer-email">Email</label>
+                                        <input type="email" class="form-control" id="customer-email" placeholder="example@domain.com">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="customer-reserve-date">Date</label>
+                                        <input type="date" required class="form-control" id="customer-reserve-date" placeholder="MM/DD/YYYY">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="customer-reserve-time">Time</label>
+                                        <input type="time" required class="form-control" id="customer-reserve-time" placeholder="HH:MM">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="reserveSize">Party Size</label>
+                                        <input type="number" required min="0" class="form-control" id="reserveSize" placeholder="Number of Guests">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="text-center">
+                                <button type="submit" class="btn large-btn btn-primary">Reserve</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+
+
+<footer class="container">
+    <p>&copy; Company 2015</p>
+</footer>
+
+<!-- /container -->
+
+<script src="js/vendor/jquery-1.11.2.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+<script src="js/vendor/bootstrap.min.js"></script>
+
+
+</body>
+</html>
