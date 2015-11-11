@@ -1,0 +1,144 @@
+<div class="well container" data-ng-controller="GuestController as guestVM">
+
+
+    <script type="text/ng-template" id="guestModalContent.html">
+        <!--guest modal for showing reservation status-->
+        <div class="modal-header">
+            <h3 class="modal-title">Reservation Status</h3>
+        </div>
+        <div class="modal-body">
+            <p> {{guestmodalVM.modal.message}}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="guestmodalVM.ok()">{{guestmodalVM.modal.cancel?'Keep it':'OK' }}</button>
+            <button class="btn btn-warning" data-ng-if="guestmodalVM.modal.cancel" type="button" ng-click="guestmodalVM.cancel()">Cancel it</button>
+        </div>
+    </script>
+
+    <uib-accordion close-others="true">
+        <uib-accordion-group is-open="guestVM.showReservation">
+            <uib-accordion-heading>
+                <strong><i class="glyphicon glyphicon-plus"></i> Make Reservation</strong>
+            </uib-accordion-heading>
+            <!--Create reservation form-->
+            <form role="form">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="customer-name">Name</label>
+                            <input type="text" required class="form-control" id="customer-name"
+                                   data-ng-model="guestVM.reservation.name" placeholder="Your name goes here">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="customer-phone">Phone</label>
+                            <input type="tel" required class="form-control" id="customer-phone"
+                                   data-ng-model="guestVM.reservation.phone" placeholder="Your Cell Number goes here">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="customer-email">Email</label>
+                            <input type="email" class="form-control" id="customer-email"
+                                   data-ng-model="guestVM.reservation.email" placeholder="example@domain.com">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="customer-reserve-date">Date</label>
+
+                            <input type="date" required class="form-control"
+                                   data-ng-model="guestVM.reservation.date" id="customer-reserve-date" placeholder="YYYY-MM-dd">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="customer-reserve-time">Time</label>
+
+                            <!--<uib-timepicker id="customer-reserve-time" ng-model="guestVM.reservation.rtime" hour-step="1" minute-step="1" show-meridian="true"></uib-timepicker>-->
+
+                            <input type="time" required class="form-control"
+                                   data-ng-model="guestVM.reservation.rtime" id="customer-reserve-time" placeholder="HH:MM">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="reserveSize">Party Size</label> <input
+                                type="number" required min="0" class="form-control"
+                                data-ng-model="guestVM.reservation.party_size" id="reserveSize" placeholder="Number of Guests">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="text-center">
+
+                    <button type="submit" data-ng-if="guestVM.editReservation" data-ng-click="guestVM.updateReservation()" class="btn large-btn btn-success leftbtn col-xs-12">
+                        Update
+                    </button>
+                    <button type="submit" data-ng-if="guestVM.editReservation" data-ng-click="guestVM.cancelReservation();guestVM.resetReservation()"
+                            class="btn large-btn btn-danger leftbtn">Cancel Reservation
+
+                    </button>
+                    <button type="submit" data-ng-if="guestVM.editReservation" data-ng-click="guestVM.resetReservation()" class="btn large-btn btn-primary leftbtn col-xs-12">
+                        Reset
+                    </button>
+                    <button type="submit" data-ng-if="!guestVM.editReservation" data-ng-click="guestVM.createReservation()" class="btn large-btn btn-success leftbtn">Reserve
+                    </button>
+
+                </div>
+            </form>
+        </uib-accordion-group>
+        <uib-accordion-group>
+            <uib-accordion-heading>
+                <strong><i class="glyphicon glyphicon-search"></i> View Reservation</strong>
+            </uib-accordion-heading>
+            <form role="form">
+                <!--Fetch reservation-->
+                <!--TODO Wont look good on a mobile, Fix it-->
+                <div class="input-group">
+							<span class="input-group-addon">Enter Confirmation Code :
+							</span> <input class="form-control" type="text" required data-ng-model="guestVM.userConfirmationCode"
+                                           placeholder="Enter confirmation code"> <span
+                        class="input-group-btn">
+								<button data-ng-click="guestVM.fetchReservation()" class="btn btn-success form-inline">Fetch</button>
+							</span>
+                </div>
+            </form>
+        </uib-accordion-group>
+    </uib-accordion>
+
+    <div class="well container-fluid">
+        <div class="animation">
+            <div class="alert alert-success col-xs-12" role="alert">
+                <div class="alert alert-info col-md-5" role="alert">
+                    <h3><span class="label label-success col-xs-12">Contact Details</span></h3>
+
+                    <div><strong class="col-md-3">Contact </strong><span class="badge">{{guestVM.profile.contact}}</span></div>
+                    <div><strong class="col-md-3">Address </strong><span class="badge">{{guestVM.profile.address}}</span></div>
+                    <div><strong class="col-md-3">Email </strong><span class="badge">{{guestVM.profile.email}}</span></div>
+
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="alert alert-info col-md-5" role="alert">
+                    <h3><span class="label label-success col-xs-12">Timings</span></h3>
+
+                    <div data-ng-repeat="timing in guestVM.profile.timings">
+                        <div><strong class="col-md-4">{{timing.day}} </strong>
+                            <span class="badge">{{timing.tFrom|date:"HH:mm" + ' to ' + (timing.tTo|date:"HH:mm")}}</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
