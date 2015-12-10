@@ -1,0 +1,372 @@
+<div class="well container">
+    <script type="text/ng-template" id="ownerMessageModalContent.html">
+        <!--modal for owner page to display messages-->
+        <div class="modal-header">
+            <h3 class="modal-title">Status</h3>
+        </div>
+        <div class="modal-body">
+            <p> {{ownermessageVM.message}}
+
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ownermessageVM.ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="ownermessageVM.cancel()">Cancel</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="ownerReservationDetailsModal.html">
+        <!--owner modal to display reservation details-->
+        <div class="modal-header">
+            <h3 class="modal-title">Reservation Details</h3>
+        </div>
+        <div class="modal-body">
+            <p> Confirmation Code:{{ownermodalVM.reservation.confirmation_code}} </p>
+
+            <p> Customer Name: {{ownermodalVM.reservation.name}}</p>
+
+            <p> Email: {{ownermodalVM.reservation.email}}</p>
+
+            <p> Phone: {{ownermodalVM.reservation.phone}}</p>
+
+            <p> Date:{{ownermodalVM.reservation.time|date:'yyyy-MM-dd HH:mm'}}</p>
+
+            <p>Party Size:{{ownermodalVM.reservation.party_size}}</p>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ownermodalVM.ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="ownermodalVM.cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="ownerTableAssignModal.html">
+        <!--modal to assign or change a table-->
+        <div class="modal-header">
+            <h3 class="modal-title">Assign a Table</h3>
+        </div>
+        <div class="modal-body">
+            <p> Confirmation Code: {{ownerTableVM.reservation.confirmation_code}} </p>
+
+            <p> Customer Name: {{ownerTableVM.reservation.name}}</p>
+
+            <p> Email: {{ownerTableVM.reservation.email}}</p>
+
+            <p> Phone: {{ownerTableVM.reservation.phone}}</p>
+
+            <p> Date: {{ownerTableVM.reservation.time|date:'yyyy-MM-dd HH:mm'}}</p>
+
+            <p>Party Size: {{ownerTableVM.reservation.party_size}}</p>
+
+            <span>Table:
+
+            <div class="btn-group" uib-dropdown is-open="ownerTableVM.status.isopen">
+                <button id="single-button" type="button" class="btn btn-success" uib-dropdown-toggle ng-disabled="false">
+                    {{ownerTableVM.selectedTable}} <span class="caret"></span>
+                </button>
+                <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                    <li role="menuitem" data-ng-repeat="id in ownerTableVM.table">
+                        <a href="#" data-ng-click="$event.preventDefault();ownerTableVM.selectedTable=id">Table: {{id}}</a>
+                    </li>
+
+
+                </ul>
+            </div>
+            </span>
+
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" type="button" ng-click="ownerTableVM.ok()">Assign Table</button>
+            <button class="btn btn-warning" type="button" ng-click="ownerTableVM.cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <uib-accordion close-others="true">
+
+        <uib-accordion-group is-open="true">
+            <uib-accordion-heading>
+                <strong> <i class="glyphicon glyphicon-list-alt"></i> View Reservations</strong>
+            </uib-accordion-heading>
+            <!--All reservations-->
+            <div ng-if="ownerVM.reservations.length>0">
+                <!-- pagination-->
+                <div class="col-md-4"></div>
+
+                <nav class="col-md-4 text-center">
+                    <uib-pagination direction-links="false" total-items="ownerVM.page.totalItems"
+                                    ng-model="ownerVM.page.currentPage" items-per-page="ownerVM.page.itemsPerPage">
+
+                    </uib-pagination>
+                </nav>
+                <div class="col-md-4"></div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Confirmation #</th>
+                        <th>Customer Name</th>
+                        <th>Reservation Date</th>
+                        <th>Party Size</th>
+                        <th>Assign Table</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="reservation in ownerVM.reservations | startFrom:(ownerVM.page.currentPage -1)*ownerVM.page.itemsPerPage | limitTo:ownerVM.page.itemsPerPage">
+                        <td><a href="#" ng-click="$event.preventDefault(); ownerVM.selectedReservation = reservation; ownerVM.openDetailsModal()">{{
+                            reservation['confirmation_code']
+                            }}</a></td>
+
+                        <td>{{reservation.name}}</td>
+                        <td>{{reservation.time|date:'yyyy-MM-dd h:mm:ss a'}}</td>
+                        <td>{{reservation['party_size']}}</td>
+                        <td>
+                            <button data-ng-click="ownerVM.assignReservation=reservation;ownerVM.openAssignModal()"
+                                    type="submit" class="btn large-btn btn-success">
+                                Assign
+                            </button>
+                            <button data-ng-click="ownerVM.reservation=reservation;ownerVM.formatReservation()"
+                                    type="submit" class="btn large-btn btn-success">
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <span data-ng-if="ownerVM.reservations.length==0" class="text-center">No Reservations</span>
+
+
+        </uib-accordion-group>
+        <uib-accordion-group>
+            <uib-accordion-heading>
+                <strong data-ng-click="ownerVM.getSeatingArea()">
+                    <i class="glyphicon glyphicon-eye-open"></i> View Seating Area </strong>
+            </uib-accordion-heading>
+            <!--the current seating area-->
+            <span data-ng-if="ownerVM.seatingArea.length==0">No reservations</span>
+            <table data-ng-if="ownerVM.seatingArea.length>0" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Table #</th>
+                    <th>Confirmation #</th>
+                    <th>Status</th>
+                    <th>Since</th>
+                    <th>Party Size</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <!--item.confirmationcode = self.reservations[j].confirmation_code;
+
+                                item.status = self.reservations[j].status > 0 ? "Reserved" : "Available";
+                                item.party_size-->
+                <tr data-ng-repeat="seat in ownerVM.seatingArea">
+                    <th scope="row">{{seat.table==0?'No Table Assigned':seat.table}}</th>
+                    <td><a href="#" ng-click="$event.preventDefault(); ownerVM.selectedSeatingCode = seat.confirmationcode; ownerVM.open()">{{ seat.confirmationcode }}</a></td>
+                    <td>{{seat.status}}</td>
+                    <td>{{seat.since|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{seat.partysize}}</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </uib-accordion-group>
+        <uib-accordion-group>
+            <uib-accordion-heading>
+                <strong><i class="glyphicon glyphicon-cog"></i> Profile and Settings</strong>
+            </uib-accordion-heading>
+            <!--profile and restaurant settings-->
+            <div class="panel panel-default">
+
+                <div class="panel-heading">Profile</div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="col-md-4 ">
+                            <div class="form-group">
+                                <label for="restaurant-name">Restaurant Address</label> <input
+                                    type="text" required class="form-control" data-ng-model="ownerVM.profile.address"
+                                    id="restaurant-name" placeholder="Restaurant Name">
+
+                            </div>
+                        </div>
+                        <div class="col-md-4 ">
+                            <div class="form-group">
+                                <label for="restaurant-contact">Contact</label> <input
+                                    type="tel" required class="form-control" data-ng-model="ownerVM.profile.contact"
+                                    id="restaurant-contact" placeholder="Contact Number">
+
+                            </div>
+                        </div>
+                        <div class="col-md-4 ">
+                            <div class="form-group">
+                                <label for="restaurant-email">Email</label> <input
+                                    type="email" required class="form-control" data-ng-model="ownerVM.profile.email"
+                                    id="restaurant-email" placeholder="Restaurant Email">
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default">
+
+                <div class="panel-heading">Auto Assign Tables</div>
+                <div class="panel-body">
+
+                    <div class="btn-group">
+                        <label class="btn btn-success" ng-model="ownerVM.profile['auto_assign_table']" uib-btn-radio="true" uncheckable>Turn On</label>
+                        <label class="btn btn-danger" ng-model="ownerVM.profile['auto_assign_table']" uib-btn-radio="false" uncheckable>Turn Off</label>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading">Select Timings</div>
+                <div class="panel-body">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>From</th>
+                                <th>To</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="timing in ownerVM.profile.timings">
+
+                                <td scope="row" class="col-md-2">{{timing.day}}</td>
+                                <td>
+                                    <!--<uib-timepicker ng-model="timing.tFrom" hour-step="1" minute-step="30" show-meridian="true"></uib-timepicker>-->
+                                    <input type="time" required class="form-control "
+                                           data-ng-model="timing.tFrom" placeholder="HH:MM">
+                                </td>
+                                <td>
+                                    <input type="time" required class="form-control "
+                                           data-ng-model="timing.tTo" placeholder="HH:MM">
+                                    <!--<uib-timepicker ng-model="timing.tTo" hour-step="1" minute-step="30" show-meridian="true"></uib-timepicker>-->
+
+                                </td>
+
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <button data-ng-click="ownerVM.saveProfile()" class="btn btn-success btn-lg center-block leftbtn">Save Changes</button>
+        </uib-accordion-group>
+        <uib-accordion-group is-open="ownerVM.showReservation">
+            <uib-accordion-heading>
+                <strong><i class="glyphicon glyphicon-plus"></i> Create Reservation</strong>
+            </uib-accordion-heading>
+            <!--create reservation form for owner-->
+            <form role="form">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="customer-name">Name</label>
+                            <input type="text" data-ng-model="ownerVM.reservation.name"
+                                   required class="form-control" id="customer-name"
+                                   placeholder="Your name goes here">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="customer-phone">Phone</label>
+                            <input type="tel" data-ng-model="ownerVM.reservation.phone"
+                                   required class="form-control" id="customer-phone"
+                                   placeholder="Your Cell Number goes here">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="customer-email">Email</label>
+                            <input type="email" data-ng-model="ownerVM.reservation.email"
+                                   class="form-control" id="customer-email"
+                                   placeholder="example@domain.com">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="customer-reserve-date">Date</label> <input
+                                type="date" required class="form-control" data-ng-model="ownerVM.reservation.date"
+                                id="customer-reserve-date" placeholder="MM/DD/YYYY">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="customer-reserve-time">Time</label> <input
+                                type="time" required class="form-control" data-ng-model="ownerVM.reservation.rtime"
+                                id="customer-reserve-time" placeholder="HH:MM">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="reserveSize">Party Size</label>
+                            <input data-ng-model="ownerVM.reservation.party_size"
+                                   type="number" required min="0" class="form-control"
+                                   id="reserveSize" placeholder="Number of Guests">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="text-center">
+
+                    <button type="submit" data-ng-if="ownerVM.editReservation" data-ng-click="ownerVM.updateReservation()" class="btn large-btn btn-success leftbtn col-xs-12">
+                        Update
+                    </button>
+                    <button type="submit" data-ng-if="ownerVM.editReservation" data-ng-click="ownerVM.cancelReservation();ownerVM.resetReservation()"
+                            class="btn large-btn btn-danger leftbtn">Cancel Reservation
+
+                    </button>
+                    <button type="submit" data-ng-if="ownerVM.editReservation" data-ng-click="ownerVM.resetReservation()" class="btn large-btn btn-primary leftbtn col-xs-12">
+                        Reset
+                    </button>
+                    <button type="submit" data-ng-if="!ownerVM.editReservation" data-ng-click="ownerVM.createReservation()" class="btn large-btn btn-success leftbtn">Reserve
+                    </button>
+
+                </div>
+            </form>
+        </uib-accordion-group>
+        <uib-accordion-group>
+            <uib-accordion-heading>
+                <strong data-ng-click="ownerVM.getAllCustomers()"><i class="glyphicon glyphicon-list"></i> All Customers</strong>
+            </uib-accordion-heading>
+            <!--owner can see all the past customers-->
+            <span data-ng-if="ownerVM.customers.length==0">No customers</span>
+            <table data-ng-if="ownerVM.customers.length>0" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Cell Number</th>
+                    <th>Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="customer in ownerVM.customers">
+                    <td>{{customer.name}}</td>
+                    <td>{{customer.phone}}</td>
+                    <td>{{customer.email}}</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </uib-accordion-group>
+    </uib-accordion>
+
+
+</div>

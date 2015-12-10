@@ -1,0 +1,79 @@
+/* ==========================================================================
+   custom styles
+   ========================================================================== */
+
+.logo {
+
+    font-family: 'Caveat Brush', cursive;
+    font-size: 150%;
+}
+
+body {
+    padding-top: 3%;
+    padding-bottom: 2%;
+    background-color: #2B3E51;
+}
+
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
+.logoff {
+
+    margin-top: .5%;
+}
+
+.topmargin {
+    margin-top: 1%;
+    width: 100%;
+}
+
+.panel-default > .panel-heading {
+    background-image: none;
+    background-color: #3c3c3c;
+    color: white;
+
+}
+
+.leftbtn {
+    width: 20%;
+    float: right;
+    right: 0%;
+    margin-right: 1%;
+}
+
+.alert-success {
+    background-image: linear-gradient(to bottom, #3c3c3c 0, #777 100%);
+}
+
+.alert-info {
+    background-image: linear-gradient(to bottom, #777F88 0, #F1F1F1 100%);
+}
+
+.animation {
+    animation-name: animation;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+}
+
+@keyframes animation {
+    0% {
+        transform: translateX(130%);
+    }
+    20% {
+        transform: translateX(-18%);
+    }
+    30% {
+        transform: translateX(15%);
+    }
+    60% {
+        transform: translateX(-10%);
+    }
+    80% {
+        transform: translateX(5%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
